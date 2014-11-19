@@ -1,0 +1,22 @@
+{
+  "name": "lazo-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/lazo/bin/lazo start ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michaeljacobdavis/lazo-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaeljacobdavis/lazo-demo/issues"
+  },
+  "homepage": "https://github.com/michaeljacobdavis/lazo-demo",
+  "dependencies": {
+    "lazo": "^1.1.0"
+  }
+}
