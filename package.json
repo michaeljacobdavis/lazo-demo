@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/lazo/bin/lazo start ."
+    "start": "node --debug-brk ./node_modules/lazo/bin/lazo start . --port=9000"
   },
   "repository": {
     "type": "git",
