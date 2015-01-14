@@ -1,5 +1,6 @@
 {
     "routes": {
-        "": "hello"
+        "": "hello",
+        "nested": "nested"
     }
 }
