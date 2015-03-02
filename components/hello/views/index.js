@@ -11,6 +11,7 @@ define(['lazoView', "client-only!jquery", "client-only!jqx"], function (View, $)
         },
 
         afterRender: function () {
+            var view = this;
             var data = this.ctl.ctx.collections.widgets.toJSON();
 
             var source = this.source = {
@@ -51,19 +52,18 @@ define(['lazoView', "client-only!jquery", "client-only!jqx"], function (View, $)
                     { text: 'Total', datafield: 'total', width: 100, cellsalign: 'right', cellsformat: 'c2' }
                 ]
             });
+
+            this.listenTo(this.ctl.ctx.collections.widgets, 'sync', function () {
+                view.source.localdata = view.ctl.ctx.collections.widgets.toJSON();
+                view.$grid.jqxGrid('updatebounddata', 'cells');
+            });
+
         },
 
         refresh: function () {
-            this.$grid.jqxGrid('clear');
             var view = this;
-            this.ctl.ctx.collections.widgets.params = {
-                random: new Date().getTime()
-            };
             this.ctl.ctx.collections.widgets.fetch({
-                success: function (data) {
-                    view.source.localdata = data.toJSON();
-                    view.$grid.jqxGrid('updatebounddata', 'cells');
-                },
+                success: function (data) {},
                 error: function () {
                 }
             });
