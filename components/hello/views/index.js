@@ -8,6 +8,8 @@ define(['lazoView', "client-only!jquery", "client-only!jqxcore", "client-only!jq
         },
 
         afterRender: function () {
+            var data = this.ctl.ctx.collections.widgets.toJSON();
+
             var source =
                 {
                 localdata: data,
