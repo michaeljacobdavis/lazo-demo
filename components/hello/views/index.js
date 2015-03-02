@@ -12,31 +12,42 @@ define(['lazoView', "client-only!jquery", "client-only!jqx"], function (View, $)
 
         afterRender: function () {
             var view = this;
-            var data = this.ctl.ctx.collections.widgets.toJSON();
-
-            var source = this.source = {
-                localdata: data,
-                datafields:
-                [
-                    { name: 'firstname', type: 'string' },
-                    { name: 'lastname', type: 'string' },
-                    { name: 'productname', type: 'string' },
-                    { name: 'quantity', type: 'number' },
-                    { name: 'price', type: 'number' },
-                    { name: 'total', type: 'number' }
-                ],
-                datatype: "array"
+            var source =
+            {
+                datatype: 'json',
+                url: 'hack'
             };
-
-            var dataAdapter = new $.jqx.dataAdapter(source);
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                loadServerData: function (serverdata, source, callback) {
+                    console.info(serverdata);
+                    view.ctl.ctx.collections.widgets.fetch({
+                        success: function(data){
+                            callback({
+                                records: data.toJSON(),
+                                totalrecords: 10000
+                            });
+                        },
+                        error: callback
+                    });
+                },
+                filter: function () {
+                    // update the grid and send a request to the server.
+                    $("#jqxgrid").jqxGrid('updatebounddata');
+                }
+            });
 
             this.$grid = $("#jqxgrid");
             this.$grid.jqxGrid({
                 source: dataAdapter,
                 filterable: true,
+                pageable: true,
                 rowdetails: true,
                 showrowdetailscolumn:true,
                 showfilterrow: true,
+                virtualmode: true,
+                rendergridrows: function (obj) {
+                    return obj.data;
+                },
                 rowdetailstemplate: {
                     rowdetailsheight: 20
                 },
@@ -52,21 +63,6 @@ define(['lazoView', "client-only!jquery", "client-only!jqx"], function (View, $)
                     { text: 'Total', datafield: 'total', width: 100, cellsalign: 'right', cellsformat: 'c2' }
                 ]
             });
-
-            this.listenTo(this.ctl.ctx.collections.widgets, 'sync', function () {
-                view.source.localdata = view.ctl.ctx.collections.widgets.toJSON();
-                view.$grid.jqxGrid('updatebounddata', 'cells');
-            });
-
-        },
-
-        refresh: function () {
-            var view = this;
-            this.ctl.ctx.collections.widgets.fetch({
-                success: function () {},
-                error: function () {}
-            });
         }
-
     });
 });
