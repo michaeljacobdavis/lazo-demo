@@ -41,7 +41,7 @@ define(['lazoView', "client-only!jquery", "client-only!jqx"], function (View, $)
                     rowdetailsheight: 20
                 },
                 initrowdetails: function (index, parentElement, gridElement, datarecord) {
-                    $(parentElement).text('Details about ' + datarecord.firstname + ' and their ' + datarecord.productname + ' problem.');
+                    $(parentElement).text('Details about ' + datarecord.firstname + ' and a ' + datarecord.productname);
                 },
                 columns: [
                     { text: 'First Name', datafield: 'firstname', width: 100 },
@@ -63,9 +63,8 @@ define(['lazoView', "client-only!jquery", "client-only!jqx"], function (View, $)
         refresh: function () {
             var view = this;
             this.ctl.ctx.collections.widgets.fetch({
-                success: function (data) {},
-                error: function () {
-                }
+                success: function () {},
+                error: function () {}
             });
         }
 
