@@ -18,12 +18,19 @@ define(['lazoView', "client-only!jquery", "client-only!jqxcore", "client-only!jq
 
             var dataAdapter = new $.jqx.dataAdapter(source, {
                 loadComplete: function (data) { },
-                loadError: function (xhr, status, error) { }      
+                loadError: function (xhr, status, error) { }
             });
 
-            $("#jqxgrid").jqxGrid(
-                {
+            $("#jqxgrid").jqxGrid({
                 source: dataAdapter,
+                rowdetails: true,
+                showrowdetailscolumn:true,
+                rowdetailstemplate: {
+                    rowdetailsheight: 20
+                },
+                initrowdetails: function (index, parentElement, gridElement, datarecord) {
+                    $(parentElement).text('Details about ' + datarecord.firstname + ' and their ' + datarecord.productname + ' problem.');
+                },
                 columns: [
                     { text: 'First Name', datafield: 'firstname', width: 100 },
                     { text: 'Last Name', datafield: 'lastname', width: 100 },
