@@ -1,8 +1,11 @@
-define(['lazoView', "client-only!jquery", "client-only!jqxcore", "client-only!jqxdata", "client-only!jqxdata.export", "client-only!jqxgrid", "client-only!jqxgrid.columnsresize", "client-only!jqxgrid.edit", "client-only!jqxgrid.export", "client-only!jqxgrid.selection", "client-only!jqxbuttons", "client-only!jqxscrollbar", "client-only!jqxmenu"], function (View) {
+define(['lazoView', "client-only!jquery", "client-only!jqx"], function (View, $) {
 
     'use strict';
 
     return View.extend({
+        events: {
+            'click .refresh': 'refresh'
+        },
 
         initialize: function () {
         },
@@ -10,21 +13,29 @@ define(['lazoView', "client-only!jquery", "client-only!jqxcore", "client-only!jq
         afterRender: function () {
             var data = this.ctl.ctx.collections.widgets.toJSON();
 
-            var source =
-                {
+            var source = this.source = {
                 localdata: data,
+                datafields:
+                [
+                    { name: 'firstname', type: 'string' },
+                    { name: 'lastname', type: 'string' },
+                    { name: 'productname', type: 'string' },
+                    { name: 'quantity', type: 'number' },
+                    { name: 'price', type: 'number' },
+                    { name: 'total', type: 'number' }
+                ],
                 datatype: "array"
             };
 
-            var dataAdapter = new $.jqx.dataAdapter(source, {
-                loadComplete: function (data) { },
-                loadError: function (xhr, status, error) { }
-            });
+            var dataAdapter = new $.jqx.dataAdapter(source);
 
-            $("#jqxgrid").jqxGrid({
+            this.$grid = $("#jqxgrid");
+            this.$grid.jqxGrid({
                 source: dataAdapter,
+                filterable: true,
                 rowdetails: true,
                 showrowdetailscolumn:true,
+                showfilterrow: true,
                 rowdetailstemplate: {
                     rowdetailsheight: 20
                 },
@@ -39,6 +50,22 @@ define(['lazoView', "client-only!jquery", "client-only!jqxcore", "client-only!jq
                     { text: 'Unit Price', datafield: 'price', width: 90, cellsalign: 'right', cellsformat: 'c2' },
                     { text: 'Total', datafield: 'total', width: 100, cellsalign: 'right', cellsformat: 'c2' }
                 ]
+            });
+        },
+
+        refresh: function () {
+            this.$grid.jqxGrid('clear');
+            var view = this;
+            this.ctl.ctx.collections.widgets.params = {
+                random: new Date().getTime()
+            };
+            this.ctl.ctx.collections.widgets.fetch({
+                success: function (data) {
+                    view.source.localdata = data.toJSON();
+                    view.$grid.jqxGrid('updatebounddata', 'cells');
+                },
+                error: function () {
+                }
             });
         }
 
