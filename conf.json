@@ -1,0 +1,64 @@
+{
+    "requirejs": {
+        "paths": {
+            "jqxcore": "bower_components/jqwidgets/jqxcore",
+            "jqxdata": "bower_components/jqwidgets/jqxdata",
+            "jqxdata.export": "bower_components/jqwidgets/jqxdata.export",
+            "jqxgrid": "bower_components/jqwidgets/jqxgrid",
+            "jqxgrid.columnsresize": "bower_components/jqwidgets/jqxgrid.columnsresize",
+            "jqxgrid.edit": "bower_components/jqwidgets/jqxgrid.edit",
+            "jqxgrid.export": "bower_components/jqwidgets/jqxgrid.export",
+            "jqxgrid.selection": "bower_components/jqwidgets/jqxgrid.selection",
+            "jqxbuttons": "bower_components/jqwidgets/jqxbuttons",
+            "jqxscrollbar": "bower_components/jqwidgets/jqxscrollbar",
+            "jqxmenu": "bower_components/jqwidgets/jqxmenu",
+            "client-only": "client-only"
+        },
+        "shim": {
+            "jqxcore": {
+                "export": "$",
+                "deps": ["jquery"]
+            },
+            "jqxdata": {
+                "export": "$",
+                "deps": ["jquery", "jqxcore"]
+            },
+            "jqxdata.export": {
+                "export": "$",
+                "deps": ["jquery", "jqxcore", "jqxdata"]
+            },
+            "jqxgrid": {
+                "export": "$",
+                "deps": ["jquery", "jqxcore", "jqxdata"]
+            },
+            "jqxgrid.columnsresize": {
+                "export": "$",
+                "deps": ["jquery", "jqxcore", "jqxgrid"]
+            },
+            "jqxgrid.edit": {
+                "export": "$",
+                "deps": ["jquery", "jqxcore", "jqxgrid"]
+            },
+            "jqxgrid.export": {
+                "export": "$",
+                "deps": ["jquery", "jqxcore", "jqxdata.export", "jqxgrid"]
+            },
+            "jqxgrid.selection": {
+                "export": "$",
+                "deps": ["jquery", "jqxcore", "jqxgrid"]
+            },
+            "jqxbuttons": {
+                "export": "$",
+                "deps": ["jquery", "jqxcore", "jqxgrid"]
+            },
+            "jqxscrollbar": {
+                "export": "$",
+                "deps": ["jquery", "jqxcore", "jqxgrid"]
+            },
+            "jqxmenu": {
+                "export": "$",
+                "deps": ["jquery", "jqxcore", "jqxgrid"]
+            }
+        }
+    }
+}

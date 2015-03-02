@@ -5,6 +5,7 @@ define(['lazoApp'], function (LazoApp) {
     return LazoApp.extend({
 
         initialize: function (callback) {
+            LAZO.logger.setLevel('debug');
             callback();
         }
 

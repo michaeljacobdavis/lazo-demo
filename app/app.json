@@ -1,5 +1,8 @@
 {
     "routes": {
         "": "hello"
-    }
+    },
+    "css": [
+        "/bower_components/jqwidgets/styles/jqx.base.css"
+    ]
 }
