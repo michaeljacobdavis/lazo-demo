@@ -63,6 +63,27 @@ define(['lazoView', "client-only!jquery", "client-only!jqx"], function (View, $)
                     { text: 'Total', datafield: 'total', width: 100, cellsalign: 'right', cellsformat: 'c2' }
                 ]
             });
+
+            this.$combo = $('#jqxComboBox');
+            this.$combo.jqxInput({
+                placeHolder: "Enter a Name",
+                height: 25,
+                width: 200,
+                source: function (query, callback) {
+                    console.info(query);
+                    view.ctl.ctx.collections.widgets.fetch({
+                        success: function(data){
+                            callback(data.map(function (order) {
+                                return {
+                                    label: order.get('firstname'),
+                                    value: order.get('lastname')
+                                };
+                            }));
+                        },
+                        error: callback
+                    });
+                }
+            });
         }
     });
 });
